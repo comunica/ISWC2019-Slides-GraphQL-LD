@@ -43,10 +43,71 @@
     </section>
     
     <section id="start" class="slide" inlist="" rel="schema:hasPart" resource="#start">
-        <h2 property="schema:name" class="big">Some title</h2>
+        <img src="img/graphql.svg" alt="GraphQL" width="200px" style="float: right" />
+        <h2 property="schema:name" class="big">GraphQL is a highly popular<br />data query language</h2>
+        <div style="width: 30%; float: left">
+            <p>Input:</p>
+            <pre>{
+  people {
+    name
+    height
+  }
+}</pre>
+        </div>
+        <div style="width: 60%; float: right">
+            <p>Output:</p>
+            <pre>{
+  "data": {
+    "people": [
+      { "name": "Victor Gilbert", 1.8 },
+      { "name": "Scarlett Nixon", 1.65 },
+      { "name": "Axel Blackburn", 1.82 }
+    ]
+  }
+}</pre>
+        </div>
+    </section>
+    
+    <section id="graphql-pros-cons" class="slide" inlist="" rel="schema:hasPart" resource="#graphql-pros-cons">
+        <img src="img/graphql.svg" alt="GraphQL" width="200px" style="float: right" />
+        <h2 property="schema:name" class="big">GraphQL pros and cons</h2>
+        <div style="width: 40%; float: left">
+            <strong>Pros</strong>:
+            <ul>
+                <li>Simple syntax: WYSIWYG</li>
+                <li>Many tools are available</li>
+                <li>Large amount of tutorials and documentation</li>
+            </ul>
+        </div>
+        <div style="width: 50%; float: right">
+            <strong>Cons</strong>:
+            <ul>
+                <li>No global semantics: queries are tied to server schemas</li>
+                <li>No global identifiers: queries are tied to server data</li>
+                <li>Federated querying is hard</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="graphql-ld" class="slide" inlist="" rel="schema:hasPart" resource="#graphql-ld">
+        <h2 property="schema:name">GraphQL-LD enhances GraphQL with RDF</h2>
+        <img src="img/graphqlld.png" alt="GraphQL-LD" width="200px" style="float: right" />
         <ul>
             <li>
-                Something else
+                <h3>Applies a JSON-LD context to GraphQL queries</h3>
+                <p class="indent">Query fields are converted to URIs</p>
+            </li>
+            <li>
+                <h3>Converts queries to SPARQL</h3>
+                <p class="indent">Hierarchies to chained triple patterns</p>
+            </li>
+            <li>
+                <h3>Executes SPARQL query</h3>
+                <p class="indent">Any SPARQL engine can be used. E.g. Comunica</p>
+            </li>
+            <li>
+                <h3>Converts SPARQL results to JSON</h3>
+                <p class="indent">Same shape as the input query</p>
             </li>
         </ul>
     </section>
