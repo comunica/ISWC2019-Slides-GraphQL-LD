@@ -46,7 +46,7 @@
         <img src="img/graphql.svg" alt="GraphQL" width="200px" style="float: right" />
         <h2 property="schema:name" class="big">GraphQL is a highly popular<br />data query language</h2>
         <div style="width: 30%; float: left">
-            <p>Input:</p>
+            <p><strong>Input</strong>:</p>
             <pre>{
   people {
     name
@@ -55,7 +55,7 @@
 }</pre>
         </div>
         <div style="width: 60%; float: right">
-            <p>Output:</p>
+            <p><strong>Output</strong>:</p>
             <pre>{
   "data": {
     "people": [
@@ -110,6 +110,35 @@
                 <p class="indent">Same shape as the input query</p>
             </li>
         </ul>
+    </section>
+    
+    <section id="graphql-ld-example" class="slide" inlist="" rel="schema:hasPart" resource="#graphql-ld-example">
+        <h2 property="schema:name">Simple GraphQL-LD example</h2>
+        <div style="width: 52%; float: left">
+            <p><strong>GraphQL query</strong>:</p>
+            <pre>{
+  name(_:"The DBpedia Ontology")
+  description
+}</pre>
+        </div>
+        <div style="width: 48%; float: right">
+            <p><strong>JSON-LD context</strong>:</p>
+            <pre>{ "name": {
+    "@id": "dct:title",
+    "@language": "en"
+  },
+  "description": "dct:description"
+}</pre>
+        </div>
+        <div style="width: 50% float: left; margin-top: 200px">
+            <br />
+            <p><strong>SPARQL query</strong>:</p>
+            <pre>SELECT ?description WHERE {
+  _:b1 dct:title "The DBpedia Ontology"@en.
+  _:b1 dct:description ?description.
+}</pre>
+        </div>
+        <center><h3><a href="http://query.linkeddatafragments.org/#transientDatasources=http%3A%2F%2Ffragments.dbpedia.org%2F2016-04%2Fen&query=query%20%40single(scope%3A%20all)%20%7B%0A%20%20name(_%3A%22The%20DBpedia%20Ontology%22)%0A%20%20description%0A%7D&queryContext=%7B%0A%20%20%22%40context%22%3A%20%7B%0A%20%20%20%20%22name%22%3A%20%7B%20%22%40id%22%3A%20%22http%3A%2F%2Fpurl.org%2Fdc%2Fterms%2Ftitle%22%2C%20%22%40language%22%3A%20%22en%22%20%7D%2C%0A%20%20%20%20%22description%22%3A%20%22http%3A%2F%2Fpurl.org%2Fdc%2Fterms%2Fdescription%22%0A%20%20%7D%0A%7D&resultsToTree=true&queryFormat=graphql">Try live</a></h3></center>
     </section>
     
     <section id="index" class="slide index">
