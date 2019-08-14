@@ -132,7 +132,7 @@
         </div>
         <div style="width: 50% float: left; margin-top: 200px">
             <br />
-            <p><strong>SPARQL query</strong>:</p>
+            <p><strong>Resulting SPARQL query</strong>:</p>
             <pre>SELECT ?description WHERE {
   _:b1 dct:title "The DBpedia Ontology"@en.
   _:b1 dct:description ?description.
@@ -153,6 +153,154 @@
         <li class="current"><a href="#index-functionality">Functionality</a></li>
         <li><a href="#index-examples">Examples</a></li>
       </ul>
+    </section>
+    
+    <section id="features-overview" class="slide" inlist="" rel="schema:hasPart" resource="#features-overview">
+        <h2 property="schema:name">Functionality: Overview</h2>
+        <ul>
+            <li>
+                <h3>Fields and nesting</h3>
+                <p class="indent">Create chained triple patterns</p>
+            </li>
+            <li>
+                <h3>Arguments</h3>
+                <p class="indent">Set objects in triple patterns</p>
+            </li>
+            <li>
+                <h3>Inline fragments</h3>
+                <p class="indent">Define optional typed blocks</p>
+            </li>
+            <li>
+                <h3>Pagination</h3>
+                <p class="indent">Apply offset and limit</p>
+            </li>
+        </ul>
+    </section>
+    
+    <section id="features-fields" class="slide" inlist="" rel="schema:hasPart" resource="#features-fields">
+        <h2 property="schema:name">Fields and nesting</h2>
+        <p>Nodes can be nested to any depth, and just produce more triple patterns.</p>
+        <div style="width: 30%; float: left">
+            <p><strong>GraphQL</strong>:</p>
+            <pre>{
+  hero {
+    name
+    friends {
+      name
+    }
+  }
+}</pre>
+        </div>
+        <div style="width: 70%; float: right">
+            <p><strong>SPARQL</strong>:</p>
+            <pre>SELECT ?hero_name ?hero_friends_name WHERE {
+  _:b1 ex:hero ?hero.
+  ?hero ex:name ?hero_name.
+  ?hero ex:friends ?hero_friends.
+  ?hero_friends ex:name ?hero_friends_name.
+}</pre>
+        </div>
+    </section>
+    
+    <section id="features-arguments" class="slide" inlist="" rel="schema:hasPart" resource="#features-arguments">
+        <h2 property="schema:name">Arguments</h2>
+        <p>Node arguments are converted to triple objects in SPARQL.</p>
+        <div style="width: 35%; float: left">
+            <p><strong>GraphQL</strong>:</p>
+            <pre>{
+  human(id: "1000") {
+    name
+    height
+  }
+}</pre>
+        </div>
+        <div style="width: 65%; float: right">
+            <p><strong>SPARQL</strong>:</p>
+            <pre>SELECT ?hero_name ?hero_friends_name WHERE {
+  _:b1 ex:hero ?hero.
+  ?human ex:id "1000".
+  ?human ex:name ?human_name.
+  ?human ex:height ?human_height.
+}</pre>
+        </div>
+    </section>
+    
+    <section id="features-inlinefragments" class="slide" inlist="" rel="schema:hasPart" resource="#features-inlinefragments">
+        <h2 property="schema:name">Inline fragments</h2>
+        <p>Inline fragments can be used to scope an (optional) block to a certain type.</p>
+        <div style="width: 30%; float: left">
+            <p><strong>GraphQL</strong>:</p>
+            <pre>{
+  hero {
+    name
+    ... on Droid {
+      function
+    }
+    ... on Human {
+      height
+    }
+  }
+}</pre>
+        </div>
+        <div style="width: 70%; float: right">
+            <p><strong>SPARQL</strong>:</p>
+            <pre>SELECT ?hero_name ?hero_function ?hero_height
+WHERE {
+  _:b1 ex:hero ?hero.
+  ?hero ex:name ?hero_name.
+  OPTIONAL {
+    ?hero rdf:type ex:Droid.
+    ?hero ex:function ?hero_function.
+  }
+  OPTIONAL {
+    ?hero rdf:type ex:Human.
+    ?hero ex:height ?hero_height.
+  }
+}</pre>
+        </div>
+    </section>
+    
+    <section id="features-pagination" class="slide" inlist="" rel="schema:hasPart" resource="#features-pagination">
+        <h2 property="schema:name">Pagination</h2>
+        <p><code>first</code> and <code>offset</code> arguments set the limit and offset. </p>
+        <div style="width: 35%; float: left">
+            <p><strong>GraphQL</strong>:</p>
+            <pre>{
+  hero {
+    name
+    friends(offset:10){
+      name
+    }
+  }
+}</pre>
+        </div>
+        <div style="width: 65%; float: right">
+            <p><strong>SPARQL</strong>:</p>
+            <pre>SELECT ?hero_name ?hero_friends_name WHERE {
+  _:b1 <http://example.org/hero> ?hero.
+  ?hero <http://example.org/name> ?hero_name.
+  {
+    SELECT * WHERE {
+      ?hero <http://example.org/friends> ?hero_friends.
+      ?hero_friends <http://example.org/name> ?hero_friends_name.
+    } OFFSET 10
+  }
+}</pre>
+        </div>
+    </section>
+    
+    <section id="features-more" class="slide" inlist="" rel="schema:hasPart" resource="#features-more">
+        <h2 property="schema:name">More advanced features</h2>
+        <p>All features are listed on <a href="https://github.com/rubensworks/graphql-to-sparql.js">https://github.com/rubensworks/graphql-to-sparql.js</a></p>
+        <ul>
+            <li><strong>Singularising</strong>: Only select a single value, instead of multiple.</li>
+            <li><strong>Meta fields</strong>: Easily getting the <code>rdf:type</code> of something.</li>
+            <li><strong>Named graphs</strong>: Getting or setting the named graph of a block.</li>
+            <li><strong>Optionals</strong>: Mark a block as <code>OPTIONAL</code>.</li>
+            <li><strong>Reversing</strong>: Reverse predicate direction.</li>
+            <li><strong>Alternatives</strong>: Include alternative predicates, like in SPARQL property paths.</li>
+            <li>...</li>
+        </ul>
     </section>
     
     <section id="index-examples" class="slide index">
