@@ -289,11 +289,54 @@ WHERE {
         </div>
     </section>
     
+    <section id="features-singular" class="slide" inlist="" rel="schema:hasPart" resource="#features-singular">
+        <h2 property="schema:name">Singularization</h2>
+        <p>Only select a single value, instead of multiple.</p>
+        <div>
+            <p><strong>Input</strong>:</p>
+            <pre>{ name @single }</pre>
+        </div>
+        <div style="width: 40%; float: left">
+            <p><strong>Output singularized</strong>:</p>
+            <pre>[
+  {
+    "name": "Alice"
+  },
+  {
+    "name": "Bob"
+  }
+]</pre>
+        </div>
+        <div style="width: 60%; float: right">
+            <p><strong>Output non-singularized</strong>:</p>
+            <pre>[
+  {
+    "name": [ "Alice", "Al" ]
+  },
+  {
+    "name": [ "Bob", "Bobby" ]
+  }
+]</pre>
+        </div>
+    </section>
+    
+    <section id="features-singular-scoping" class="slide" inlist="" rel="schema:hasPart" resource="#features-singular-scoping">
+        <h2 property="schema:name">Singularization scoping</h2>
+        <p>Singularization can be scoped to a single field, to all fields, or can be reversed</p>
+        <div>
+            <p><strong>GraphQL</strong>:</p>
+            <pre>query @single(scope: all) { # Makes all fields singular by default
+  hero @plural { # Makes only this field plural
+    name
+  }
+}</pre>
+        </div>
+    </section>
+    
     <section id="features-more" class="slide" inlist="" rel="schema:hasPart" resource="#features-more">
         <h2 property="schema:name">More advanced features</h2>
         <p>All features are listed on <a href="https://github.com/rubensworks/graphql-to-sparql.js">https://github.com/rubensworks/graphql-to-sparql.js</a></p>
         <ul>
-            <li><strong>Singularising</strong>: Only select a single value, instead of multiple.</li>
             <li><strong>Meta fields</strong>: Easily getting the <code>rdf:type</code> of something.</li>
             <li><strong>Named graphs</strong>: Getting or setting the named graph of a block.</li>
             <li><strong>Optionals</strong>: Mark a block as <code>OPTIONAL</code>.</li>
