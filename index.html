@@ -277,12 +277,12 @@ WHERE {
         <div style="width: 65%; float: right">
             <p><strong>SPARQL</strong>:</p>
             <pre>SELECT ?hero_name ?hero_friends_name WHERE {
-  _:b1 <http://example.org/hero> ?hero.
-  ?hero <http://example.org/name> ?hero_name.
+  _:b1 ex:hero ?hero.
+  ?hero ex:name ?hero_name.
   {
     SELECT * WHERE {
-      ?hero <http://example.org/friends> ?hero_friends.
-      ?hero_friends <http://example.org/name> ?hero_friends_name.
+      ?hero ex:friends ?hero_friends.
+      ?hero_friends ex:name ?hero_friends_name.
     } OFFSET 10
   }
 }</pre>
